@@ -1,0 +1,17 @@
+{
+  "name": "transactional-poetry-ai",
+  "version": "0.1.0",
+  "description": "AI version of Maurice Benayoun's Transactional Poetry (Value of Values): every VOV transaction becomes a poem, written by Claude within the artist's grammar.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.134.0"
+  }
+}

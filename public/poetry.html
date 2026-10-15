@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transactional Poetry | VoV — AI version</title>
+  <meta name="description" content="Transactional Poetry is generated out of the actual transactions happening on Value of Values — now written by AI, within Maurice Benayoun's grammar.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black|Space+Mono:400,700&display=swap">
+  <link rel="stylesheet" href="css/poetry.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="poetry.html">VALUE OF VALUES <small>Transactional Poetry · AI version</small></a>
+    <nav>
+      <a href="poetry.html" aria-current="page">Poetry</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="poetry.html?exhibition">Exhibition</a>
+    </nav>
+  </header>
+
+  <main class="stage">
+    <section class="card" aria-live="polite">
+      <p class="poem" id="poem">…</p>
+      <div class="meta" id="meta"></div>
+    </section>
+    <div class="controls">
+      <button id="prev" title="Previous poem (←)">←</button>
+      <button id="pause" title="Pause / play (space)">Pause</button>
+      <button id="next" title="Next poem (→)">→</button>
+      <button id="share" title="Copy a link to this poem">Share this poetry</button>
+    </div>
+  </main>
+
+  <script type="module">
+    import { poemToHtml, poemToPlain } from "./js/format.js";
+    import { describeTransaction } from "./js/market.js";
+    import { getFeed } from "./js/feed.js";
+
+    const params = new URLSearchParams(location.search);
+    if (location.pathname.endsWith("/clean-poetry") || params.has("exhibition")) document.body.classList.add("exhibition");
+
+    // Same knob as the original site: localStorage "refresh_interval" (seconds), or ?interval=
+    let stored = null;
+    try { stored = localStorage.getItem("refresh_interval"); } catch {}
+    const INTERVAL = 1000 * (Number(params.get("interval")) || Number(stored) || 30);
+
+    const $poem = document.getElementById("poem");
+    const $meta = document.getElementById("meta");
+    const $pause = document.getElementById("pause");
+
+    let poems = [];
+    let order = [];
+    let cursor = 0;
+    let timer = null;
+    let paused = false;
+
+    const shuffle = (list) => {
+      const a = [...list];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+
+    function metaHtml(p) {
+      const parts = [];
+      if (p.tx?.vov) {
+        const when = new Date(p.tx.date).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+        parts.push(`<span>${describeTransaction(p.tx)}${p.tx.location ? ` · ${p.tx.location}` : ""} · ${when}</span>`);
+      }
+      parts.push(p.source === "ai"
+        ? `<span class="badge ai" title="${p.model || "Claude"}">written by AI</span>`
+        : `<span class="badge" title="${p.template || ""}">Benayoun grammar</span>`);
+      return parts.join("");
+    }
+
+    function show(p, instant = false) {
+      const render = () => {
+        $poem.innerHTML = poemToHtml(p.text);
+        $meta.innerHTML = metaHtml(p);
+        document.title = `${poemToPlain(p.text)} | Transactional Poetry`;
+      };
+      if (instant) return render();
+      $poem.classList.add("leaving");
+      setTimeout(() => {
+        render();
+        $poem.classList.replace("leaving", "entering");
+        requestAnimationFrame(() => requestAnimationFrame(() => $poem.classList.remove("entering")));
+      }, 600);
+    }
+
+    function step(delta) {
+      if (!order.length) return;
+      cursor = (cursor + delta + order.length) % order.length;
+      show(order[cursor]);
+      schedule();
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (!paused) timer = setTimeout(() => step(1), INTERVAL);
+    }
+
+    async function refresh() {
+      const feed = await getFeed(200);
+      poems = feed.poems;
+      // AI poems first in the rotation when there are any, like a fresh layer on top.
+      const ai = poems.filter((p) => p.source === "ai");
+      order = [...shuffle(ai), ...shuffle(poems.filter((p) => p.source !== "ai"))];
+      return feed;
+    }
+
+    document.getElementById("prev").onclick = () => step(-1);
+    document.getElementById("next").onclick = () => step(1);
+    $pause.onclick = () => {
+      paused = !paused;
+      $pause.textContent = paused ? "Play" : "Pause";
+      schedule();
+    };
+    document.getElementById("share").onclick = async (e) => {
+      const p = order[cursor];
+      const url = `${location.origin}${location.pathname}?id=${encodeURIComponent(p.id)}`;
+      try {
+        if (navigator.share) await navigator.share({ title: "Transactional Poetry", text: poemToPlain(p.text), url });
+        else await navigator.clipboard.writeText(`${poemToPlain(p.text)}\n${url}`);
+        e.target.textContent = "Link copied";
+      } catch {
+        e.target.textContent = url;
+      }
+      setTimeout(() => (e.target.textContent = "Share this poetry"), 2500);
+    };
+    addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === " ") { e.preventDefault(); $pause.click(); }
+      if (e.key === "Escape") document.body.classList.remove("exhibition");
+    });
+
+    try {
+      await refresh();
+      const wanted = params.get("id");
+      const i = wanted ? order.findIndex((p) => p.id === wanted) : -1;
+      if (i >= 0) {
+        cursor = i;
+        paused = true;
+        $pause.textContent = "Play";
+      }
+      show(order[cursor], true);
+      schedule();
+      setInterval(refresh, 5 * 60 * 1000);
+    } catch (err) {
+      $poem.textContent = "The market is silent for now.";
+      $meta.textContent = String(err.message || err);
+    }
+  </script>
+</body>
+</html>

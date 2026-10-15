@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Transactional Poetry — AI version</title>
+  <meta name="description" content="Every transaction on Value of Values, and the poem it produced.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black|Space+Mono:400,700&display=swap">
+  <link rel="stylesheet" href="css/poetry.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="poetry.html">VALUE OF VALUES <small>Transactional Poetry · AI version</small></a>
+    <nav>
+      <a href="poetry.html">Poetry</a>
+      <a href="dashboard.html" aria-current="page">Dashboard</a>
+      <a href="poetry.html?exhibition">Exhibition</a>
+    </nav>
+  </header>
+
+  <main class="dash">
+    <section class="hero" aria-live="polite">
+      <h1>Transactional Poetry</h1>
+      <p class="poem" id="hero-poem">…</p>
+      <div class="meta" id="hero-meta"></div>
+      <div class="tagline">Generated in real time after the actual transactions on VOV.ART — written by AI within Maurice Benayoun's grammar</div>
+    </section>
+
+    <div id="notice"></div>
+
+    <section class="tiles">
+      <div class="tile"><div class="label">Total VoVs</div><div class="num" id="t-vovs">–</div></div>
+      <div class="tile"><div class="label">Transactions read</div><div class="num" id="t-tx">–</div></div>
+      <div class="tile"><div class="label">Poems written by AI</div><div class="num" id="t-ai">–</div></div>
+      <div class="tile"><div class="label">Poems from the grammar</div><div class="num" id="t-grammar">–</div></div>
+    </section>
+
+    <div class="cols">
+      <section class="panel">
+        <header><h2>Trading history → poetry</h2><span id="h-count"></span></header>
+        <ul class="history" id="history"></ul>
+      </section>
+
+      <div class="stack">
+        <section class="panel">
+          <header><h2>Composer</h2><span>choose 1–4 values</span></header>
+          <div class="composer">
+            <div class="chips" id="chips"></div>
+            <p class="poem" id="c-poem"><span class="hint">Pick values, then compose.</span></p>
+            <div class="actions">
+              <button class="btn primary" id="c-ai" disabled>Compose with AI</button>
+              <button class="btn" id="c-grammar" disabled>Compose with the grammar</button>
+              <span class="hint" id="c-hint"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <header><h2>Median price of values</h2><span>USD, asking price</span></header>
+          <div class="bars" id="bars"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div class="tooltip" id="tooltip" role="tooltip"></div>
+
+  <script type="module">
+    import { VALUES, VALUE_COLORS } from "./js/grammar.js";
+    import { poemToHtml, legibleColor } from "./js/format.js";
+    import { describeTransaction } from "./js/market.js";
+    import { getFeed, getMarket, composePoem } from "./js/feed.js";
+
+    const $ = (id) => document.getElementById(id);
+    const fmt = new Intl.NumberFormat();
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+    let poems = [];
+    let heroIndex = 0;
+    let heroTimer = null;
+
+    const badge = (p) => p.source === "ai"
+      ? `<span class="badge ai" title="${esc(p.model || "Claude")}">AI</span>`
+      : `<span class="badge" title="${esc(p.template || "")}">grammar</span>`;
+
+    function showHero(p) {
+      $("hero-poem").innerHTML = poemToHtml(p.text);
+      $("hero-meta").innerHTML = (p.tx?.vov ? `<span>${esc(describeTransaction(p.tx))}</span>` : "") + badge(p);
+      document.querySelectorAll(".history li").forEach((li) => li.setAttribute("aria-selected", li.dataset.id === p.id));
+    }
+
+    function rotateHero() {
+      clearTimeout(heroTimer);
+      if (!poems.length) return;
+      showHero(poems[heroIndex % poems.length]);
+      heroIndex++;
+      heroTimer = setTimeout(rotateHero, 20000);
+    }
+
+    function renderHistory() {
+      $("history").innerHTML = poems.map((p) => {
+        const when = new Date(p.tx.date).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+        return `<li data-id="${esc(p.id)}">
+          <div class="row"><span class="pill">${p.tx.action}</span><span class="vov">${esc(p.tx.vov)}</span>
+            <span>${esc(p.tx.price || "")}</span>${badge(p)}<span class="when">${when}</span></div>
+          <p class="poem">${poemToHtml(p.text)}</p></li>`;
+      }).join("");
+      $("history").onclick = (e) => {
+        const li = e.target.closest("li");
+        if (!li) return;
+        const i = poems.findIndex((p) => p.id === li.dataset.id);
+        heroIndex = i;
+        rotateHero();
+        scrollTo({ top: 0, behavior: "smooth" });
+      };
+    }
+
+    async function loadFeed() {
+      const feed = await getFeed(300);
+      poems = feed.poems;
+      const ai = poems.filter((p) => p.source === "ai").length;
+      $("t-vovs").textContent = feed.market.totalVovs ? fmt.format(feed.market.totalVovs) : "–";
+      $("t-tx").textContent = fmt.format(feed.market.transactions || 0);
+      $("t-ai").textContent = fmt.format(ai);
+      $("t-grammar").textContent = fmt.format(poems.length - ai);
+      $("h-count").textContent = `latest ${poems.length}`;
+      if (feed.mode === "static") {
+        $("notice").innerHTML = `<p class="notice">Static mode: no poetry server is running, so poems come from the grammar only. Run <code>npm start</code> with an <code>ANTHROPIC_API_KEY</code> to let the AI write them.</p>`;
+      } else if (!feed.ai.enabled) {
+        $("notice").innerHTML = `<p class="notice">The AI poet is off (no Anthropic credentials on the server): poems come from the grammar.</p>`;
+      } else if (feed.aiQueue) {
+        $("notice").innerHTML = `<p class="notice">The AI is writing… ${feed.aiQueue} transactions waiting for their poem.</p>`;
+      } else {
+        $("notice").innerHTML = "";
+      }
+      renderHistory();
+      return feed;
+    }
+
+    // ---- median price bars (single series: one hue; the swatch names the value) ----
+    async function loadBars() {
+      const { median } = await getMarket();
+      const rows = Object.entries(median || {})
+        .map(([value, s]) => ({ value, ...s }))
+        .filter((r) => Number.isFinite(r.median))
+        .sort((a, b) => b.median - a.median);
+      const max = Math.max(...rows.map((r) => r.median), 1);
+      $("bars").innerHTML = rows.map((r) => `
+        <div class="bar" data-value="${esc(r.value)}" style="--value:${legibleColor(VALUE_COLORS[r.value])}">
+          <span class="name"><span class="swatch"></span>${esc(r.value)}</span>
+          <span class="track"><span class="fill" style="display:block;width:${(100 * r.median) / max}%"></span></span>
+          <span class="amount">${fmt.format(Math.round(r.median))}</span>
+        </div>`).join("");
+      const tip = $("tooltip");
+      $("bars").onmousemove = (e) => {
+        const bar = e.target.closest(".bar");
+        if (!bar) return (tip.style.display = "none");
+        const r = rows.find((x) => x.value === bar.dataset.value);
+        tip.innerHTML = `<strong>${esc(r.value)}</strong><br>median ${fmt.format(r.median)} USD<br>min ${fmt.format(r.min)} · max ${fmt.format(r.max)}<br>${r.count} on sale · cap. ${fmt.format(r.capitalisation)} USD`;
+        tip.style.display = "block";
+        tip.style.left = `${Math.min(e.clientX + 14, innerWidth - 250)}px`;
+        tip.style.top = `${e.clientY + 14}px`;
+      };
+      $("bars").onmouseleave = () => (tip.style.display = "none");
+    }
+
+    // ---- composer ----
+    const chosen = [];
+    function renderChips() {
+      $("chips").innerHTML = VALUES.map((v) =>
+        `<button class="chip" style="--value:${legibleColor(VALUE_COLORS[v])}" aria-pressed="${chosen.includes(v)}" data-v="${v}">${v}</button>`).join("");
+      $("c-ai").disabled = $("c-grammar").disabled = chosen.length === 0;
+      $("c-hint").textContent = chosen.length ? chosen.join(" · ") : "";
+    }
+    $("chips").onclick = (e) => {
+      const v = e.target.dataset?.v;
+      if (!v) return;
+      const i = chosen.indexOf(v);
+      if (i >= 0) chosen.splice(i, 1);
+      else if (chosen.length < 4) chosen.push(v);
+      renderChips();
+    };
+    async function runCompose(ai) {
+      $("c-poem").innerHTML = `<span class="hint">${ai ? "The AI is writing…" : "…"}</span>`;
+      const p = await composePoem(chosen, { ai });
+      $("c-poem").innerHTML = poemToHtml(p.text);
+      $("c-hint").innerHTML = badge(p) + (p.fallbackReason ? ` <span>grammar used: ${esc(p.fallbackReason)}</span>` : "");
+    }
+    $("c-ai").onclick = () => runCompose(true);
+    $("c-grammar").onclick = () => runCompose(false);
+
+    renderChips();
+    try {
+      await loadFeed();
+      rotateHero();
+    } catch (err) {
+      $("hero-poem").textContent = "The market is silent for now.";
+      $("notice").innerHTML = `<p class="notice">${esc(err.message || err)}</p>`;
+    }
+    loadBars().catch(() => ($("bars").innerHTML = `<p class="notice">Market data unavailable.</p>`));
+    setInterval(() => loadFeed().catch(() => {}), 60000);
+  </script>
+</body>
+</html>
