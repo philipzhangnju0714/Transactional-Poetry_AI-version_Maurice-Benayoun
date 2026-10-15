@@ -114,6 +114,7 @@ src/poet.js           Claude prompt, validation, grammar fallback
 public/js/grammar.js  structures, values, colours, composition engine (browser + Node)
 public/js/market.js   VOV API client, transaction → values
 public/js/format.js   "#" line breaks, value highlighting
+public/js/prompt.js   what the AI poet is told, and how its answer is checked
 public/js/feed.js     page data: server if present, otherwise VOV API + grammar
 public/poetry.html    poem page / exhibition version
 public/dashboard.html dashboard

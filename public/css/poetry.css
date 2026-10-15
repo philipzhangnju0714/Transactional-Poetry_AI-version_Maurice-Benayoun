@@ -61,10 +61,17 @@ body:has(.stage) { min-height: 100svh; display: flex; flex-direction: column; }
 .btn.primary { background: var(--ink); color: #000; border-color: var(--ink); }
 .btn:disabled { opacity: .4; cursor: default; }
 
+/* Exhibition version, as on v-o-v.io/clean-poetry: all caps, one accent for values */
 body.exhibition .topbar, body.exhibition .controls, body.exhibition .meta { display: none; }
-
 body.exhibition .card { border: 0; margin: 0; }
 body.exhibition { cursor: none; }
+body.exhibition .poem {
+  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(28px, 4.6vw, 80px); line-height: 1.15; color: #f3f4f6;
+}
+body.exhibition .poem .value { color: #ff3c00; }
+.exhibition-footer { display: none; text-align: center; font-size: 13px; padding-block: 16px 24px; color: var(--ink); }
+body.exhibition .exhibition-footer { display: block; }
 
 /* ---- dashboard ---------------------------------------------------------------- */
 .dash { padding: 24px; display: grid; gap: 24px; }
