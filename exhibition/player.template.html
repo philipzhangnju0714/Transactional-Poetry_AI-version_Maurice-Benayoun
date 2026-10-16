@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transactional Poetry — AI version</title>
+<style>
+  /*__FONTS__*/
+  :root {
+    color-scheme: dark;
+    --bg: #000; --ink: #f3f4f6; --ink-2: #9ca3af; --ink-3: #5b616b; --accent: #ff3c00; --ai: #b9a7ff;
+    --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+    --mono: "Space Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--mono); overflow: hidden; }
+  body { display: grid; grid-template-rows: 1fr auto; }
+  body.hide-cursor { cursor: none; }
+
+  .screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4vh; padding: 6vh 6vw 2vh; text-align: center; }
+  .poem {
+    margin: 0; max-width: 88vw; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: min(5.6vw, 10.5vh); line-height: 1.12; text-wrap: balance; transition: opacity .7s ease;
+  }
+  .poem .value { color: var(--accent); }
+  .fade { opacity: 0; }
+  .caption { display: flex; gap: 1.6vw; align-items: center; justify-content: center; flex-wrap: wrap;
+    font-size: max(12px, 1.6vh); color: var(--ink-2); letter-spacing: .02em; transition: opacity .7s ease; }
+  .tag { border: 1px solid #2a2e35; border-radius: 999px; padding: .25em .9em; font-size: .85em; letter-spacing: .1em; text-transform: uppercase; }
+  .tag.ai { color: var(--ai); border-color: #4b4470; }
+  body.no-caption .caption { visibility: hidden; }
+  footer { text-align: center; font-size: max(11px, 1.15vh); color: var(--ink); padding: 0 0 3vh; letter-spacing: .03em; }
+  .hint { position: fixed; left: 50%; top: 2.5vh; transform: translateX(-50%); font-size: 12px; color: var(--ink-3); transition: opacity 1s ease; white-space: nowrap; }
+
+  /* cards used for the video */
+  .card { display: none; }
+  body.card-mode .screen > :not(.card) { display: none; }
+  body.card-mode .card.on { display: flex; }
+  .card { flex-direction: column; align-items: center; gap: 3.2vh; }
+  .card h1 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 9vh; line-height: 1; letter-spacing: .01em; }
+  .card h1 em { font-style: normal; color: var(--accent); }
+  .card p { margin: 0; font-size: 2.1vh; color: var(--ink-2); max-width: 70vw; line-height: 1.6; }
+  .compare { display: grid; grid-template-columns: auto 1fr; gap: 3vh 3vw; align-items: baseline; text-align: left; max-width: 80vw; }
+  .compare .label { font-size: 1.8vh; letter-spacing: .14em; color: var(--ink-2); text-transform: uppercase; white-space: nowrap; }
+  .compare .line { font-family: var(--display); font-size: 4.4vh; line-height: 1.15; text-transform: uppercase; }
+  .compare .line .value { color: var(--accent); }
+  .compare .trade { font-size: 2.4vh; color: var(--ink); }
+  .compare .ai-label { color: var(--ai); }
+</style>
+</head>
+<body class="hide-cursor">
+<main class="screen">
+  <p class="poem" id="poem"></p>
+  <div class="caption" id="caption"></div>
+
+  <section class="card" id="card-intro">
+    <h1>TRANSACTIONAL POETRY <em>AI</em></h1>
+    <p>After Maurice Benayoun. Every poem is written for a real trade on the Value of Values market.</p>
+  </section>
+  <section class="card" id="card-how">
+    <div class="compare" id="compare"></div>
+  </section>
+  <section class="card" id="card-end">
+    <h1>TRANSACTIONAL POETRY <em>AI</em></h1>
+    <p id="end-note"></p>
+  </section>
+</main>
+<footer>Transactional Poetry · AI version</footer>
+<div class="hint" id="hint">click or F: full screen · ← → · space: pause · G: AI / grammar · C: caption</div>
+
+<script>
+const DATA = /*__POEMS__*/;
+const VERSION = "/*__VERSION__*/";
+const poems = DATA.poems;
+const params = new URLSearchParams(location.search);
+const INTERVAL = 1000 * (Number(params.get("interval")) || 8);
+const $ = (id) => document.getElementById(id);
+
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const toHtml = (text) => text.split(/\s*#\s*/).map((line) =>
+  esc(line).replace(/\b[A-Z]{2,}\b/g, (w) => `<span class="value">${w}</span>`)).join("<br>");
+
+function captionFor(p, mode) {
+  const tx = p.tx;
+  const verb = { ASK: "offered for", SOLD: "sold for", SWAP: "swapped for", TRADE: "traded" }[tx.action];
+  const price = /VOV$/.test(tx.price || "") ? tx.price.replace("VOV", " VOV") : `$${(tx.price || "").replace(/\.00$/, "")}`;
+  const when = new Date(tx.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const parts = [`${tx.vov} ${verb} ${price}`, tx.location, when].filter(Boolean).map((t) => `<span>${esc(t)}</span>`);
+  parts.push(mode === "ai" ? `<span class="tag ai">written by AI</span>` : `<span class="tag">artist's grammar</span>`);
+  return parts.join("");
+}
+
+let i = 0, mode = params.get("mode") === "grammar" ? "grammar" : "ai", timer = null, paused = false;
+
+function draw(index, m = mode) {
+  const p = poems[index];
+  $("poem").innerHTML = toHtml(m === "ai" ? p.ai : p.grammar);
+  $("caption").innerHTML = captionFor(p, m);
+}
+function show(index, animate = true) {
+  if (!animate) return draw(index);
+  $("poem").classList.add("fade"); $("caption").classList.add("fade");
+  setTimeout(() => { draw(index); $("poem").classList.remove("fade"); $("caption").classList.remove("fade"); }, 700);
+}
+function schedule() { clearTimeout(timer); if (!paused) timer = setTimeout(() => { i = (i + 1) % poems.length; show(i); schedule(); }, INTERVAL); }
+
+// ---- rendering hooks for the video (render-video.mjs) ----
+window.__render = {
+  count: poems.length,
+  poem(index, m) { document.body.classList.remove("card-mode"); draw(index, m); },
+  card(name) {
+    document.body.classList.add("card-mode");
+    document.querySelectorAll(".card").forEach((c) => c.classList.toggle("on", c.id === `card-${name}`));
+  },
+};
+
+// The comparison card: one trade, the 2019 grammar line and the AI line.
+(() => {
+  const p = poems[0];
+  const when = new Date(p.tx.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  $("compare").innerHTML = `
+    <span class="label">trade</span><span class="trade">${esc(p.tx.vov)} offered for $${esc(p.tx.price.replace(/\.00$/, ""))} · ${esc(p.tx.location || "")} · ${when}</span>
+    <span class="label">artist's grammar</span><span class="line">${toHtml(p.grammar)}</span>
+    <span class="label ai-label">AI version</span><span class="line">${toHtml(p.ai)}</span>`;
+  $("end-note").textContent = `Prototype ${VERSION} · ${poems.length} real trades from the Value of Values market · AI poems written within the artist's grammar`;
+})();
+
+if (params.has("render")) {
+  document.getElementById("hint").remove();
+} else {
+  show(0, false);
+  schedule();
+  setTimeout(() => ($("hint").style.opacity = 0), 6000);
+  const step = (d) => { i = (i + d + poems.length) % poems.length; show(i); schedule(); };
+  const full = () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch?.(() => {});
+  addEventListener("click", full);
+  addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (k === "arrowright") step(1);
+    else if (k === "arrowleft") step(-1);
+    else if (k === " ") { e.preventDefault(); paused = !paused; schedule(); }
+    else if (k === "g") { mode = mode === "ai" ? "grammar" : "ai"; show(i); }
+    else if (k === "c") document.body.classList.toggle("no-caption");
+    else if (k === "f") full();
+  });
+}
+</script>
+</body>
+</html>

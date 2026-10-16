@@ -48,6 +48,22 @@ always gets the same poem.
 Without the server, the pages read the public VOV API directly and use the
 grammar only.
 
+## Exhibition package
+
+```bash
+npm run exhibition          # needs ffmpeg; set CHROME_PATH if Chromium is not found
+```
+
+This writes `dist/exhibition/` with:
+- `player.html`: an offline full-screen player with the fonts embedded;
+- two 1920×1080 videos: a seamless loop, and a presentation with title cards;
+- stills of every poem;
+- `poems.txt`: each trade with its grammar line and its AI line.
+
+The poems come from `exhibition/poems.json`, which `exhibition/write-poems.mjs` builds from a market snapshot.
+The 16 AI poems in v0.1.0 were written by Claude during development, with the prompt in `public/js/prompt.js`.
+Each one passes the same validator as the live server.
+
 ## How a transaction becomes a poem
 
 1. `src/server.js` polls the public VOV API (`/api/v1/chart/trading-history/`,
@@ -119,6 +135,7 @@ public/js/feed.js     page data: server if present, otherwise VOV API + grammar
 public/poetry.html    poem page / exhibition version
 public/dashboard.html dashboard
 docs/                 the original Poetry_structures.xls and screenshots
+exhibition/           exhibition player, poems, fonts (OFL) and the video renderer
 test/                 grammar tests + AI path against a mock Anthropic API
 ```
 

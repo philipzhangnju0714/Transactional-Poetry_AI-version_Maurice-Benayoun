@@ -1,0 +1,292 @@
+{
+ "snapshotTakenAt": "2026-10-15T06:34:59.913Z",
+ "poems": [
+  {
+   "id": "PEACE0319@2025-12-29T03:11:56.454346",
+   "values": [
+    "PEACE",
+    "KNOWLEDGE"
+   ],
+   "ai": "I put a price on my PEACE # and the buyer paid in KNOWLEDGE.",
+   "grammar": "When PEACE leaves you, # then comes KNOWLEDGE.",
+   "tx": {
+    "id": "PEACE0319@2025-12-29T03:11:56.454346",
+    "vov": "PEACE0319",
+    "value": "PEACE",
+    "action": "ASK",
+    "price": "1,600.00",
+    "date": "2025-12-29T03:11:56.454346",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "KNOWLEDGE0395@2025-12-29T03:01:58.428749",
+   "values": [
+    "KNOWLEDGE",
+    "COMPASSION",
+    "HUMOR"
+   ],
+   "ai": "Sell me your KNOWLEDGE, keep the COMPASSION, # I will pay the difference in HUMOR.",
+   "grammar": "I'm glad to give KNOWLEDGE and COMPASSION... to get HUMOR",
+   "tx": {
+    "id": "KNOWLEDGE0395@2025-12-29T03:01:58.428749",
+    "vov": "KNOWLEDGE0395",
+    "value": "KNOWLEDGE",
+    "action": "ASK",
+    "price": "2,500.00",
+    "date": "2025-12-29T03:01:58.428749",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "COMPASSION0275@2025-12-28T09:58:56.560163",
+   "values": [
+    "COMPASSION"
+   ],
+   "ai": "So little for my COMPASSION? # Then keep the change.",
+   "grammar": "Don't pretend you believe in COMPASSION # if you give it away",
+   "tx": {
+    "id": "COMPASSION0275@2025-12-28T09:58:56.560163",
+    "vov": "COMPASSION0275",
+    "value": "COMPASSION",
+    "action": "ASK",
+    "price": "85.00",
+    "date": "2025-12-28T09:58:56.560163",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "HUMOR0289@2025-12-28T09:52:04.709819",
+   "values": [
+    "HUMOR",
+    "KNOWLEDGE"
+   ],
+   "ai": "Laugh now: my HUMOR # was worth more than your KNOWLEDGE.",
+   "grammar": "The future is in KNOWLEDGE, take my HUMOR for it",
+   "tx": {
+    "id": "HUMOR0289@2025-12-28T09:52:04.709819",
+    "vov": "HUMOR0289",
+    "value": "HUMOR",
+    "action": "ASK",
+    "price": "320.00",
+    "date": "2025-12-28T09:52:04.709819",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "KNOWLEDGE0388@2025-12-28T09:45:57.941345",
+   "values": [
+    "KNOWLEDGE",
+    "GENEROSITY"
+   ],
+   "ai": "Everything I know about KNOWLEDGE # I learned from GENEROSITY.",
+   "grammar": "I won't regret KNOWLEDGE, # if I reach GENEROSITY",
+   "tx": {
+    "id": "KNOWLEDGE0388@2025-12-28T09:45:57.941345",
+    "vov": "KNOWLEDGE0388",
+    "value": "KNOWLEDGE",
+    "action": "ASK",
+    "price": "350.00",
+    "date": "2025-12-28T09:45:57.941345",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "GENEROSITY0349@2025-12-28T08:44:58.429017",
+   "values": [
+    "GENEROSITY",
+    "LOVE",
+    "BEAUTY",
+    "POWER"
+   ],
+   "ai": "GENEROSITY bought LOVE, LOVE bought BEAUTY, # and BEAUTY never asked for POWER.",
+   "grammar": "it takes GENEROSITY, LOVE, and BEAUTY # to get pure POWER",
+   "tx": {
+    "id": "GENEROSITY0349@2025-12-28T08:44:58.429017",
+    "vov": "GENEROSITY0349",
+    "value": "GENEROSITY",
+    "action": "ASK",
+    "price": "1,600.00",
+    "date": "2025-12-28T08:44:58.429017",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "LOVE0285@2025-12-28T08:43:34.999175",
+   "values": [
+    "LOVE",
+    "BEAUTY"
+   ],
+   "ai": "I sold my LOVE at market price, # BEAUTY was thrown in for free.",
+   "grammar": "Some believe in LOVE, # others dream of BEAUTY... It is fine with me!",
+   "tx": {
+    "id": "LOVE0285@2025-12-28T08:43:34.999175",
+    "vov": "LOVE0285",
+    "value": "LOVE",
+    "action": "ASK",
+    "price": "1,150.00",
+    "date": "2025-12-28T08:43:34.999175",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "BEAUTY0346@2025-12-28T08:42:28.824824",
+   "values": [
+    "BEAUTY"
+   ],
+   "ai": "Who will bid on my BEAUTY # before the morning takes it back?",
+   "grammar": "I always give away my BEAUTY, it doesn't make sense to me!",
+   "tx": {
+    "id": "BEAUTY0346@2025-12-28T08:42:28.824824",
+    "vov": "BEAUTY0346",
+    "value": "BEAUTY",
+    "action": "ASK",
+    "price": "650.00",
+    "date": "2025-12-28T08:42:28.824824",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "POWER0377@2025-12-27T17:06:01.620610",
+   "values": [
+    "POWER",
+    "PURITY"
+   ],
+   "ai": "My POWER went for almost nothing, # my PURITY is not for sale.",
+   "grammar": "I gave so much POWER to get some PURITY",
+   "tx": {
+    "id": "POWER0377@2025-12-27T17:06:01.620610",
+    "vov": "POWER0377",
+    "value": "POWER",
+    "action": "ASK",
+    "price": "12.00",
+    "date": "2025-12-27T17:06:01.620610",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "PURITY0406@2025-12-27T17:03:54.777042",
+   "values": [
+    "PURITY",
+    "FAIRNESS",
+    "FAITH",
+    "SEX"
+   ],
+   "ai": "PURITY for FAIRNESS, FAITH for SEX: # nobody said the swap was even.",
+   "grammar": "it takes PURITY, FAIRNESS, and FAITH # to get pure SEX",
+   "tx": {
+    "id": "PURITY0406@2025-12-27T17:03:54.777042",
+    "vov": "PURITY0406",
+    "value": "PURITY",
+    "action": "ASK",
+    "price": "172.00",
+    "date": "2025-12-27T17:03:54.777042",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "FAIRNESS0335@2025-12-27T17:02:48.645065",
+   "values": [
+    "FAIRNESS"
+   ],
+   "ai": "They priced my FAIRNESS low. # That seemed fair.",
+   "grammar": "Don't pretend you believe in FAIRNESS # if you give it away",
+   "tx": {
+    "id": "FAIRNESS0335@2025-12-27T17:02:48.645065",
+    "vov": "FAIRNESS0335",
+    "value": "FAIRNESS",
+    "action": "ASK",
+    "price": "35.00",
+    "date": "2025-12-27T17:02:48.645065",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "FAITH0308@2025-12-27T17:02:00.356097",
+   "values": [
+    "FAITH",
+    "SEX"
+   ],
+   "ai": "I offered FAITH, # you asked if SEX came with it.",
+   "grammar": "can we say the worth of FAITH # equals that of SEX?",
+   "tx": {
+    "id": "FAITH0308@2025-12-27T17:02:00.356097",
+    "vov": "FAITH0308",
+    "value": "FAITH",
+    "action": "ASK",
+    "price": "230.00",
+    "date": "2025-12-27T17:02:00.356097",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "SEX0356@2025-12-27T16:59:29.864381",
+   "values": [
+    "SEX",
+    "INTELLIGENCE"
+   ],
+   "ai": "SEX is selling well this season, # INTELLIGENCE stays on the shelf.",
+   "grammar": "I loved so much SEX, now I'm more into INTELLIGENCE",
+   "tx": {
+    "id": "SEX0356@2025-12-27T16:59:29.864381",
+    "vov": "SEX0356",
+    "value": "SEX",
+    "action": "ASK",
+    "price": "1,299.00",
+    "date": "2025-12-27T16:59:29.864381",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "INTELLIGENCE0314@2025-12-27T08:15:58.518431",
+   "values": [
+    "INTELLIGENCE"
+   ],
+   "ai": "If INTELLIGENCE has a price, # who was smart enough to set it?",
+   "grammar": "can we really afford INTELLIGENCE?",
+   "tx": {
+    "id": "INTELLIGENCE0314@2025-12-27T08:15:58.518431",
+    "vov": "INTELLIGENCE0314",
+    "value": "INTELLIGENCE",
+    "action": "ASK",
+    "price": "677.00",
+    "date": "2025-12-27T08:15:58.518431",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "SECURITY0425@2025-12-27T08:14:42.692448",
+   "values": [
+    "SECURITY"
+   ],
+   "ai": "Lock my SECURITY in a vault # and sell me the key.",
+   "grammar": "What I really want is your SECURITY",
+   "tx": {
+    "id": "SECURITY0425@2025-12-27T08:14:42.692448",
+    "vov": "SECURITY0425",
+    "value": "SECURITY",
+    "action": "ASK",
+    "price": "220.00",
+    "date": "2025-12-27T08:14:42.692448",
+    "location": "Taipei"
+   }
+  },
+  {
+   "id": "FAME0375@2025-12-27T08:12:19.398493",
+   "values": [
+    "FAME"
+   ],
+   "ai": "Everyone knows my FAME is for sale, # that is what makes it FAME.",
+   "grammar": "My friends want more FAME, why not?",
+   "tx": {
+    "id": "FAME0375@2025-12-27T08:12:19.398493",
+    "vov": "FAME0375",
+    "value": "FAME",
+    "action": "ASK",
+    "price": "720.00",
+    "date": "2025-12-27T08:12:19.398493",
+    "location": "Taipei"
+   }
+  }
+ ]
+}
