@@ -1,0 +1,81 @@
+Transactional Poetry, AI version v0.1.0: 16 real trades
+
+01  PEACE0319  ASK 1,600.00  Taipei  2025-12-29
+    values:   PEACE, KNOWLEDGE
+    grammar:  When PEACE leaves you, / then comes KNOWLEDGE.
+    AI:       I put a price on my PEACE / and the buyer paid in KNOWLEDGE.
+
+02  KNOWLEDGE0395  ASK 2,500.00  Taipei  2025-12-29
+    values:   KNOWLEDGE, COMPASSION, HUMOR
+    grammar:  I'm glad to give KNOWLEDGE and COMPASSION... to get HUMOR
+    AI:       Sell me your KNOWLEDGE, keep the COMPASSION, / I will pay the difference in HUMOR.
+
+03  COMPASSION0275  ASK 85.00  Taipei  2025-12-28
+    values:   COMPASSION
+    grammar:  Don't pretend you believe in COMPASSION / if you give it away
+    AI:       So little for my COMPASSION? / Then keep the change.
+
+04  HUMOR0289  ASK 320.00  Taipei  2025-12-28
+    values:   HUMOR, KNOWLEDGE
+    grammar:  The future is in KNOWLEDGE, take my HUMOR for it
+    AI:       Laugh now: my HUMOR / was worth more than your KNOWLEDGE.
+
+05  KNOWLEDGE0388  ASK 350.00  Taipei  2025-12-28
+    values:   KNOWLEDGE, GENEROSITY
+    grammar:  I won't regret KNOWLEDGE, / if I reach GENEROSITY
+    AI:       Everything I know about KNOWLEDGE / I learned from GENEROSITY.
+
+06  GENEROSITY0349  ASK 1,600.00  Taipei  2025-12-28
+    values:   GENEROSITY, LOVE, BEAUTY, POWER
+    grammar:  it takes GENEROSITY, LOVE, and BEAUTY / to get pure POWER
+    AI:       GENEROSITY bought LOVE, LOVE bought BEAUTY, / and BEAUTY never asked for POWER.
+
+07  LOVE0285  ASK 1,150.00  Taipei  2025-12-28
+    values:   LOVE, BEAUTY
+    grammar:  Some believe in LOVE, / others dream of BEAUTY... It is fine with me!
+    AI:       I sold my LOVE at market price, / BEAUTY was thrown in for free.
+
+08  BEAUTY0346  ASK 650.00  Taipei  2025-12-28
+    values:   BEAUTY
+    grammar:  I always give away my BEAUTY, it doesn't make sense to me!
+    AI:       Who will bid on my BEAUTY / before the morning takes it back?
+
+09  POWER0377  ASK 12.00  Taipei  2025-12-27
+    values:   POWER, PURITY
+    grammar:  I gave so much POWER to get some PURITY
+    AI:       My POWER went for almost nothing, / my PURITY is not for sale.
+
+10  PURITY0406  ASK 172.00  Taipei  2025-12-27
+    values:   PURITY, FAIRNESS, FAITH, SEX
+    grammar:  it takes PURITY, FAIRNESS, and FAITH / to get pure SEX
+    AI:       PURITY for FAIRNESS, FAITH for SEX: / nobody said the swap was even.
+
+11  FAIRNESS0335  ASK 35.00  Taipei  2025-12-27
+    values:   FAIRNESS
+    grammar:  Don't pretend you believe in FAIRNESS / if you give it away
+    AI:       They priced my FAIRNESS low. / That seemed fair.
+
+12  FAITH0308  ASK 230.00  Taipei  2025-12-27
+    values:   FAITH, SEX
+    grammar:  can we say the worth of FAITH / equals that of SEX?
+    AI:       I offered FAITH, / you asked if SEX came with it.
+
+13  SEX0356  ASK 1,299.00  Taipei  2025-12-27
+    values:   SEX, INTELLIGENCE
+    grammar:  I loved so much SEX, now I'm more into INTELLIGENCE
+    AI:       SEX is selling well this season, / INTELLIGENCE stays on the shelf.
+
+14  INTELLIGENCE0314  ASK 677.00  Taipei  2025-12-27
+    values:   INTELLIGENCE
+    grammar:  can we really afford INTELLIGENCE?
+    AI:       If INTELLIGENCE has a price, / who was smart enough to set it?
+
+15  SECURITY0425  ASK 220.00  Taipei  2025-12-27
+    values:   SECURITY
+    grammar:  What I really want is your SECURITY
+    AI:       Lock my SECURITY in a vault / and sell me the key.
+
+16  FAME0375  ASK 720.00  Taipei  2025-12-27
+    values:   FAME
+    grammar:  My friends want more FAME, why not?
+    AI:       Everyone knows my FAME is for sale, / that is what makes it FAME.

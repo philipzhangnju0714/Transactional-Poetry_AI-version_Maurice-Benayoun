@@ -126,7 +126,7 @@
       $("t-grammar").textContent = fmt.format(poems.length - ai);
       $("h-count").textContent = `latest ${poems.length}`;
       if (feed.mode === "static") {
-        $("notice").innerHTML = `<p class="notice">Static mode: no poetry server is running, so poems come from the grammar only. Run <code>npm start</code> with an <code>ANTHROPIC_API_KEY</code> to let the AI write them.</p>`;
+        $("notice").innerHTML = `<p class="notice">Live market data from Value of Values. Without the poetry server, the poems on this page come from the artist's grammar. <a href="exhibition/">See the AI poems and the exhibition videos →</a></p>`;
       } else if (!feed.ai.enabled) {
         $("notice").innerHTML = `<p class="notice">The AI poet is off (no Anthropic credentials on the server): poems come from the grammar.</p>`;
       } else if (feed.aiQueue) {
@@ -134,6 +134,8 @@
       } else {
         $("notice").innerHTML = "";
       }
+      // The AI composer needs the poetry server; the grammar composer works everywhere.
+      $("c-ai").hidden = feed.mode === "static" || !feed.ai.enabled;
       renderHistory();
       return feed;
     }

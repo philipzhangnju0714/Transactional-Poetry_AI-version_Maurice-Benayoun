@@ -64,6 +64,18 @@ The poems come from `exhibition/poems.json`, which `exhibition/write-poems.mjs` 
 The 16 AI poems in v0.1.0 were written by Claude during development, with the prompt in `public/js/prompt.js`.
 Each one passes the same validator as the live server.
 
+## Public site (GitHub Pages)
+
+`.github/workflows/pages.yml` publishes the site on every push:
+
+| Path | What it serves |
+|---|---|
+| `/` | the poetry pages (`public/`), with live VOV data and grammar poems |
+| `/exhibition/` | the v0.1.0 offline player, both videos and the stills (`docs/exhibition-v0.1.0/`) |
+
+Turn it on once: **Settings → Pages → Source: GitHub Actions**. A private repository needs a paid GitHub plan for Pages.
+On the free plan, either make the repository public or host `public/` elsewhere (Netlify, Vercel, Cloudflare Pages).
+
 ## How a transaction becomes a poem
 
 1. `src/server.js` polls the public VOV API (`/api/v1/chart/trading-history/`,
