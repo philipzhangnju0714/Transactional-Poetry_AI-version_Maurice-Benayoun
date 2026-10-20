@@ -13,7 +13,9 @@ import { pathToFileURL } from "node:url";
 
 const here = new URL(".", import.meta.url);
 const read = (p) => readFileSync(new URL(p, here));
-const out = resolve(process.argv[2] || "dist/exhibition");
+const args = process.argv.slice(2);
+const playerOnly = args.includes("--player-only"); // rebuild player.html only, no stills or videos
+const out = resolve(args.find((a) => !a.startsWith("--")) || "dist/exhibition");
 const frames = join(out, ".frames");
 const VERSION = JSON.parse(read("../package.json")).version;
 
@@ -29,6 +31,7 @@ const player = read("player.template.html")
   .toString()
   .replace("/*__FONTS__*/", () => fonts)
   .replace("/*__POEMS__*/", () => read("poems.json").toString())
+  .replace("/*__POEMS_IT__*/", () => read("poems.it.json").toString())
   .replace("/*__VERSION__*/", `v${VERSION}`);
 mkdirSync(out, { recursive: true });
 writeFileSync(join(out, "player.html"), player);
@@ -41,6 +44,11 @@ const list = JSON.parse(read("poems.json")).poems.map((p, i) =>
    `    grammar:  ${flat(p.grammar)}`,
    `    AI:       ${flat(p.ai)}`].join("\n"));
 writeFileSync(join(out, "poems.txt"), `Transactional Poetry, AI version v${VERSION}: ${list.length} real trades\n\n${list.join("\n\n")}\n`);
+
+if (playerOnly) {
+  console.log(`Player written to ${join(out, "player.html")}`);
+  process.exit(0);
+}
 
 // ---- 2. stills ------------------------------------------------------------------
 rmSync(frames, { recursive: true, force: true });

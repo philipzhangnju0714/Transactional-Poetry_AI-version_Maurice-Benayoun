@@ -1,0 +1,74 @@
+{
+ "values": {
+  "PEACE": "PACE", "KNOWLEDGE": "CONOSCENZA", "COMPASSION": "COMPASSIONE", "HUMOR": "UMORISMO",
+  "GENEROSITY": "GENEROSITÀ", "LOVE": "AMORE", "BEAUTY": "BELLEZZA", "POWER": "POTERE",
+  "PURITY": "PUREZZA", "FAIRNESS": "EQUITÀ", "FAITH": "FEDE", "SEX": "SESSO",
+  "INTELLIGENCE": "INTELLIGENZA", "SECURITY": "SICUREZZA", "FAME": "FAMA"
+ },
+ "poems": {
+  "PEACE0319": {
+   "ai": "Ho dato un prezzo alla mia PACE # e il compratore ha pagato in CONOSCENZA.",
+   "grammar": "Quando la PACE ti lascia, # allora arriva la CONOSCENZA."
+  },
+  "KNOWLEDGE0395": {
+   "ai": "Vendimi la tua CONOSCENZA, tieniti la COMPASSIONE, # la differenza te la pago in UMORISMO.",
+   "grammar": "Sono felice di dare CONOSCENZA e COMPASSIONE... per avere UMORISMO"
+  },
+  "COMPASSION0275": {
+   "ai": "Così poco per la mia COMPASSIONE? # Allora tieni il resto.",
+   "grammar": "Non fingere di credere nella COMPASSIONE # se poi la regali"
+  },
+  "HUMOR0289": {
+   "ai": "Ridi pure: il mio UMORISMO # valeva più della tua CONOSCENZA.",
+   "grammar": "Il futuro è nella CONOSCENZA, prendi il mio UMORISMO in cambio"
+  },
+  "KNOWLEDGE0388": {
+   "ai": "Tutto ciò che so sulla CONOSCENZA # l'ho imparato dalla GENEROSITÀ.",
+   "grammar": "Non rimpiangerò la CONOSCENZA, # se raggiungo la GENEROSITÀ"
+  },
+  "GENEROSITY0349": {
+   "ai": "La GENEROSITÀ ha comprato l'AMORE, l'AMORE ha comprato la BELLEZZA, # e la BELLEZZA non ha mai chiesto POTERE.",
+   "grammar": "ci vogliono GENEROSITÀ, AMORE e BELLEZZA # per avere puro POTERE"
+  },
+  "LOVE0285": {
+   "ai": "Ho venduto il mio AMORE a prezzo di mercato, # la BELLEZZA era in omaggio.",
+   "grammar": "Alcuni credono nell'AMORE, # altri sognano la BELLEZZA... A me va bene!"
+  },
+  "BEAUTY0346": {
+   "ai": "Chi farà un'offerta per la mia BELLEZZA # prima che il mattino se la riprenda?",
+   "grammar": "Regalo sempre la mia BELLEZZA, per me non ha senso!"
+  },
+  "POWER0377": {
+   "ai": "Il mio POTERE è andato quasi per niente, # la mia PUREZZA non è in vendita.",
+   "grammar": "Ho dato così tanto POTERE per avere un po' di PUREZZA"
+  },
+  "PURITY0406": {
+   "ai": "PUREZZA per EQUITÀ, FEDE per SESSO: # nessuno ha detto che lo scambio fosse equo.",
+   "grammar": "ci vogliono PUREZZA, EQUITÀ e FEDE # per avere puro SESSO"
+  },
+  "FAIRNESS0335": {
+   "ai": "Hanno valutato poco la mia EQUITÀ. # Mi è sembrato equo.",
+   "grammar": "Non fingere di credere nell'EQUITÀ # se poi la regali"
+  },
+  "FAITH0308": {
+   "ai": "Ho offerto FEDE, # tu hai chiesto se il SESSO era incluso.",
+   "grammar": "possiamo dire che il valore della FEDE # è pari a quello del SESSO?"
+  },
+  "SEX0356": {
+   "ai": "Il SESSO si vende bene questa stagione, # l'INTELLIGENZA resta sullo scaffale.",
+   "grammar": "Ho amato tanto il SESSO, ora preferisco l'INTELLIGENZA"
+  },
+  "INTELLIGENCE0314": {
+   "ai": "Se l'INTELLIGENZA ha un prezzo, # chi è stato abbastanza intelligente da fissarlo?",
+   "grammar": "possiamo davvero permetterci l'INTELLIGENZA?"
+  },
+  "SECURITY0425": {
+   "ai": "Chiudi la mia SICUREZZA in un caveau # e vendimi la chiave.",
+   "grammar": "Ciò che voglio davvero è la tua SICUREZZA"
+  },
+  "FAME0375": {
+   "ai": "Tutti sanno che la mia FAMA è in vendita, # è questo che la rende FAMA.",
+   "grammar": "I miei amici vogliono più FAMA, perché no?"
+  }
+ }
+}

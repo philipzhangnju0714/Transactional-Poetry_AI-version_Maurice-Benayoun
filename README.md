@@ -52,10 +52,11 @@ grammar only.
 
 ```bash
 npm run exhibition          # needs ffmpeg; set CHROME_PATH if Chromium is not found
+node exhibition/render.mjs --player-only   # rebuild only player.html
 ```
 
 This writes `dist/exhibition/` with:
-- `player.html`: an offline full-screen player with the fonts embedded;
+- `player.html`: an offline full-screen player with the fonts embedded, in English and Italian (EN / IT switch, `L` key or `?lang=it`; Italian lines in `exhibition/poems.it.json`);
 - two 1920×1080 videos: a seamless loop, and a presentation with title cards;
 - stills of every poem;
 - `poems.txt`: each trade with its grammar line and its AI line.
