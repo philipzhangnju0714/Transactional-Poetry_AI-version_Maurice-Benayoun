@@ -56,7 +56,7 @@ node exhibition/render.mjs --player-only   # rebuild only player.html
 ```
 
 This writes `dist/exhibition/` with:
-- `player.html`: an offline full-screen player with the fonts embedded, in English and Italian (EN / IT switch, `L` key or `?lang=it`; Italian lines in `exhibition/poems.it.json`);
+- `player.html`: an offline full-screen player with the fonts embedded, in English and Italian (EN / IT switch, `L` key or `?lang=it`; Italian lines in `exhibition/poems.it.json`). On load it reads the VOV Trading History once, then every 5 minutes. The newest real trade is always the first poem: a trade from the snapshot keeps its AI poem, and a newer trade gets a poem from 20 bilingual templates (`liveTemplates`);
 - two 1920×1080 videos: a seamless loop, and a presentation with title cards;
 - stills of every poem;
 - `poems.txt`: each trade with its grammar line and its AI line.

@@ -371,10 +371,53 @@ const DATA = {
 };
 const IT = {
  "values": {
-  "PEACE": "PACE", "KNOWLEDGE": "CONOSCENZA", "COMPASSION": "COMPASSIONE", "HUMOR": "UMORISMO",
-  "GENEROSITY": "GENEROSITÀ", "LOVE": "AMORE", "BEAUTY": "BELLEZZA", "POWER": "POTERE",
-  "PURITY": "PUREZZA", "FAIRNESS": "EQUITÀ", "FAITH": "FEDE", "SEX": "SESSO",
-  "INTELLIGENCE": "INTELLIGENZA", "SECURITY": "SICUREZZA", "FAME": "FAMA"
+  "PEACE": "PACE",
+  "KNOWLEDGE": "CONOSCENZA",
+  "COMPASSION": "COMPASSIONE",
+  "HUMOR": "UMORISMO",
+  "GENEROSITY": "GENEROSITÀ",
+  "LOVE": "AMORE",
+  "BEAUTY": "BELLEZZA",
+  "POWER": "POTERE",
+  "PURITY": "PUREZZA",
+  "FAIRNESS": "EQUITÀ",
+  "FAITH": "FEDE",
+  "SEX": "SESSO",
+  "INTELLIGENCE": "INTELLIGENZA",
+  "SECURITY": "SICUREZZA",
+  "FAME": "FAMA",
+  "ANARCHY": "ANARCHIA",
+  "ART": "ARTE",
+  "AUTHENTICITY": "AUTENTICITÀ",
+  "AUTONOMY": "AUTONOMIA",
+  "CREATIVITY": "CREATIVITÀ",
+  "DEMOCRACY": "DEMOCRAZIA",
+  "DESIRE": "DESIDERIO",
+  "EQUALITY": "UGUAGLIANZA",
+  "FAMILY": "FAMIGLIA",
+  "FINANCE": "FINANZA",
+  "FREEDOM": "LIBERTÀ",
+  "FRIENDSHIP": "AMICIZIA",
+  "HAPPINESS": "FELICITÀ",
+  "HONESTY": "ONESTÀ",
+  "INTEGRITY": "INTEGRITÀ",
+  "JUSTICE": "GIUSTIZIA",
+  "KINDNESS": "GENTILEZZA",
+  "LOYALTY": "LEALTÀ",
+  "MODESTY": "MODESTIA",
+  "MONEY": "DENARO",
+  "OPENNESS": "APERTURA",
+  "PLEASURE": "PIACERE",
+  "PRIVACY": "PRIVACY",
+  "RESPECT": "RISPETTO",
+  "SOCIAL": "SOCIALITÀ",
+  "SPACE": "SPAZIO",
+  "STRENGTH": "FORZA",
+  "SUCCESS": "SUCCESSO",
+  "TIME": "TEMPO",
+  "TRUST": "FIDUCIA",
+  "TRUTH": "VERITÀ",
+  "WISDOM": "SAGGEZZA"
  },
  "poems": {
   "PEACE0319": {
@@ -441,9 +484,90 @@ const IT = {
    "ai": "Tutti sanno che la mia FAMA è in vendita, # è questo che la rende FAMA.",
    "grammar": "I miei amici vogliono più FAMA, perché no?"
   }
- }
-}
-;
+ },
+ "liveTemplates": [
+  {
+   "en": "{A}! she said",
+   "it": "{A}! # disse lei"
+  },
+  {
+   "en": "what is important, # if not {A}?",
+   "it": "cosa conta, # se non {A}?"
+  },
+  {
+   "en": "My friends want more {A}, # why not?",
+   "it": "I miei amici vogliono più {A}, # perché no?"
+  },
+  {
+   "en": "I would give everything # for a bit of your {A}",
+   "it": "Darei tutto # per un po' di {A}"
+  },
+  {
+   "en": "I don't know {A}, # so I want it!",
+   "it": "Non conosco {A}, # per questo lo voglio!"
+  },
+  {
+   "en": "all my enemies want {A}. # Me too!",
+   "it": "tutti i miei nemici vogliono {A}. # Anch'io!"
+  },
+  {
+   "en": "I cherish {A} above all",
+   "it": "Custodisco {A} # sopra ogni cosa"
+  },
+  {
+   "en": "{A} or {B}? # make a choice!",
+   "it": "{A} o {B}? # Scegli!"
+  },
+  {
+   "en": "{A} against {B}... I win!",
+   "it": "{A} contro {B}... # vinco io!"
+  },
+  {
+   "en": "yesterday {A}, # today {B}, tomorrow...",
+   "it": "ieri {A}, # oggi {B}, domani..."
+  },
+  {
+   "en": "with a bit of {A} # you get more {B}",
+   "it": "con un po' di {A} # ottieni più {B}"
+  },
+  {
+   "en": "Forget {A}, I prefer {B}",
+   "it": "Dimentica {A}, # preferisco {B}"
+  },
+  {
+   "en": "I lost {A}, but I won {B}",
+   "it": "Ho perso {A}, # ma ho vinto {B}"
+  },
+  {
+   "en": "Give me your {B} # and take my {A}",
+   "it": "Dammi {B} # e prenditi {A}"
+  },
+  {
+   "en": "When you already have a lot of {A}, # you seek more {B}",
+   "it": "Chi ha già {A} # cerca sempre più {B}"
+  },
+  {
+   "en": "I will always say no to {A}, # and yes to {B}",
+   "it": "Dirò sempre no a {A}, # e sì a {B}"
+  },
+  {
+   "en": "{A} and {B} together # make a strong {C}",
+   "it": "{A} e {B} insieme # fanno {C}"
+  },
+  {
+   "en": "with {A} and {B}, you get true {C}",
+   "it": "con {A} e {B} # ottieni {C}"
+  },
+  {
+   "en": "I'm glad to give {A} and {B}, # to get {C}",
+   "it": "Sono felice di dare {A} e {B}, # per avere {C}"
+  },
+  {
+   "en": "it takes {A}, {B}, and {C} # to get pure {D}",
+   "it": "ci vogliono {A}, {B} e {C} # per arrivare a {D}"
+  }
+ ]
+};
 const UI = {
   en: { hint: "click or F: full screen · ← → · space: pause · G: AI / grammar · L: language", grammar: "artist's grammar" },
   it: { hint: "clic o F: schermo intero · ← → · spazio: pausa · G: IA / grammatica · L: lingua", grammar: "grammatica dell'artista" },
@@ -464,7 +588,51 @@ const captionFor = (m) => (m === "ai" ? "" : `<span class="tag">${esc(UI[lang].g
 let lang = params.get("lang") === "it" ? "it" : params.get("lang") === "en" ? "en" : null;
 try { lang ??= localStorage.getItem("tp-lang"); } catch {}
 if (lang !== "it") lang = "en";
-const textOf = (p, m) => (lang === "it" ? IT.poems[p.tx.vov][m] : p[m]);
+const textOf = (p, m) => (p.live ? p.live[lang] : lang === "it" ? IT.poems[p.tx.vov][m] : p[m]);
+
+// ---- live: the first poem is always the newest real trade on the VOV market ----
+// One request on load (the Trading History feed of vov.art/dashboard-one), then a light check every 5 minutes.
+// A trade from the snapshot keeps its AI poem; a newer one gets a poem from the bilingual templates.
+const TRADES = "https://api.v-o-v.io/api/v1/chart/trading-history/";
+const slotsOf = (t) => [...new Set(t.match(/\{[A-D]\}/g))].sort();
+const fillIn = (t, names) => { const order = slotsOf(t); return t.replace(/\{[A-D]\}/g, (s) => names[order.indexOf(s)]); };
+function seeded(seed) {
+  let h = 2166136261;
+  for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) ^ 0x9e3779b9) >>> 0) / 4294967296;
+}
+function livePoem(tx, before) {
+  const rand = seeded(tx.id);
+  const r = rand(), want = r < 0.25 ? 1 : r < 0.75 ? 2 : r < 0.95 ? 3 : 4;
+  const values = [tx.value];
+  for (const t of before) { if (values.length >= want) break; if (!values.includes(t.value)) values.push(t.value); }
+  const size = Math.max(...IT.liveTemplates.map((t) => slotsOf(t.en).length).filter((n) => n <= values.length));
+  const pool = IT.liveTemplates.filter((t) => slotsOf(t.en).length === size);
+  const tpl = pool[Math.floor(rand() * pool.length)];
+  return { tx, live: { en: fillIn(tpl.en, values), it: fillIn(tpl.it, values.map((v) => IT.values[v] || v)) } };
+}
+let newestId = null;
+async function refreshLive() {
+  try {
+    const res = await fetch(TRADES, { cache: "no-store" });
+    if (!res.ok) return;
+    const trades = ((await res.json()).vovs || [])
+      .filter((t) => t.vov)
+      .map((t) => ({ vov: t.vov, date: t.date, id: `${t.vov}@${t.date}`, value: t.vov.replace(/\d+$/, "").toUpperCase() }))
+      .sort((a, b) => (a.date < b.date ? 1 : -1));
+    const tx = trades[0];
+    if (!tx || tx.id === newestId) return;
+    const first = newestId === null;
+    newestId = tx.id;
+    const k = poems.findIndex((p) => p.tx.vov === tx.vov && p.tx.date === tx.date);
+    poems.unshift(k >= 0 ? poems.splice(k, 1)[0] : livePoem(tx, trades.slice(1)));
+    i = 0;
+    show(0, !first);
+    schedule();
+  } catch {
+    // offline: the snapshot poems keep playing
+  }
+}
 
 let i = 0, mode = params.get("mode") === "grammar" ? "grammar" : "ai", timer = null, paused = false;
 
@@ -527,6 +695,8 @@ if (params.has("render")) {
   });
   show(0, false);
   schedule();
+  refreshLive();
+  setInterval(refreshLive, 5 * 60 * 1000);
   setTimeout(() => ($("hint").style.opacity = 0), 6000);
   const step = (d) => { i = (i + d + poems.length) % poems.length; show(i); schedule(); };
   const full = () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch?.(() => {});

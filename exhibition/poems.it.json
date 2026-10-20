@@ -1,9 +1,52 @@
 {
  "values": {
-  "PEACE": "PACE", "KNOWLEDGE": "CONOSCENZA", "COMPASSION": "COMPASSIONE", "HUMOR": "UMORISMO",
-  "GENEROSITY": "GENEROSITÀ", "LOVE": "AMORE", "BEAUTY": "BELLEZZA", "POWER": "POTERE",
-  "PURITY": "PUREZZA", "FAIRNESS": "EQUITÀ", "FAITH": "FEDE", "SEX": "SESSO",
-  "INTELLIGENCE": "INTELLIGENZA", "SECURITY": "SICUREZZA", "FAME": "FAMA"
+  "PEACE": "PACE",
+  "KNOWLEDGE": "CONOSCENZA",
+  "COMPASSION": "COMPASSIONE",
+  "HUMOR": "UMORISMO",
+  "GENEROSITY": "GENEROSITÀ",
+  "LOVE": "AMORE",
+  "BEAUTY": "BELLEZZA",
+  "POWER": "POTERE",
+  "PURITY": "PUREZZA",
+  "FAIRNESS": "EQUITÀ",
+  "FAITH": "FEDE",
+  "SEX": "SESSO",
+  "INTELLIGENCE": "INTELLIGENZA",
+  "SECURITY": "SICUREZZA",
+  "FAME": "FAMA",
+  "ANARCHY": "ANARCHIA",
+  "ART": "ARTE",
+  "AUTHENTICITY": "AUTENTICITÀ",
+  "AUTONOMY": "AUTONOMIA",
+  "CREATIVITY": "CREATIVITÀ",
+  "DEMOCRACY": "DEMOCRAZIA",
+  "DESIRE": "DESIDERIO",
+  "EQUALITY": "UGUAGLIANZA",
+  "FAMILY": "FAMIGLIA",
+  "FINANCE": "FINANZA",
+  "FREEDOM": "LIBERTÀ",
+  "FRIENDSHIP": "AMICIZIA",
+  "HAPPINESS": "FELICITÀ",
+  "HONESTY": "ONESTÀ",
+  "INTEGRITY": "INTEGRITÀ",
+  "JUSTICE": "GIUSTIZIA",
+  "KINDNESS": "GENTILEZZA",
+  "LOYALTY": "LEALTÀ",
+  "MODESTY": "MODESTIA",
+  "MONEY": "DENARO",
+  "OPENNESS": "APERTURA",
+  "PLEASURE": "PIACERE",
+  "PRIVACY": "PRIVACY",
+  "RESPECT": "RISPETTO",
+  "SOCIAL": "SOCIALITÀ",
+  "SPACE": "SPAZIO",
+  "STRENGTH": "FORZA",
+  "SUCCESS": "SUCCESSO",
+  "TIME": "TEMPO",
+  "TRUST": "FIDUCIA",
+  "TRUTH": "VERITÀ",
+  "WISDOM": "SAGGEZZA"
  },
  "poems": {
   "PEACE0319": {
@@ -70,5 +113,87 @@
    "ai": "Tutti sanno che la mia FAMA è in vendita, # è questo che la rende FAMA.",
    "grammar": "I miei amici vogliono più FAMA, perché no?"
   }
- }
+ },
+ "liveTemplates": [
+  {
+   "en": "{A}! she said",
+   "it": "{A}! # disse lei"
+  },
+  {
+   "en": "what is important, # if not {A}?",
+   "it": "cosa conta, # se non {A}?"
+  },
+  {
+   "en": "My friends want more {A}, # why not?",
+   "it": "I miei amici vogliono più {A}, # perché no?"
+  },
+  {
+   "en": "I would give everything # for a bit of your {A}",
+   "it": "Darei tutto # per un po' di {A}"
+  },
+  {
+   "en": "I don't know {A}, # so I want it!",
+   "it": "Non conosco {A}, # per questo lo voglio!"
+  },
+  {
+   "en": "all my enemies want {A}. # Me too!",
+   "it": "tutti i miei nemici vogliono {A}. # Anch'io!"
+  },
+  {
+   "en": "I cherish {A} above all",
+   "it": "Custodisco {A} # sopra ogni cosa"
+  },
+  {
+   "en": "{A} or {B}? # make a choice!",
+   "it": "{A} o {B}? # Scegli!"
+  },
+  {
+   "en": "{A} against {B}... I win!",
+   "it": "{A} contro {B}... # vinco io!"
+  },
+  {
+   "en": "yesterday {A}, # today {B}, tomorrow...",
+   "it": "ieri {A}, # oggi {B}, domani..."
+  },
+  {
+   "en": "with a bit of {A} # you get more {B}",
+   "it": "con un po' di {A} # ottieni più {B}"
+  },
+  {
+   "en": "Forget {A}, I prefer {B}",
+   "it": "Dimentica {A}, # preferisco {B}"
+  },
+  {
+   "en": "I lost {A}, but I won {B}",
+   "it": "Ho perso {A}, # ma ho vinto {B}"
+  },
+  {
+   "en": "Give me your {B} # and take my {A}",
+   "it": "Dammi {B} # e prenditi {A}"
+  },
+  {
+   "en": "When you already have a lot of {A}, # you seek more {B}",
+   "it": "Chi ha già {A} # cerca sempre più {B}"
+  },
+  {
+   "en": "I will always say no to {A}, # and yes to {B}",
+   "it": "Dirò sempre no a {A}, # e sì a {B}"
+  },
+  {
+   "en": "{A} and {B} together # make a strong {C}",
+   "it": "{A} e {B} insieme # fanno {C}"
+  },
+  {
+   "en": "with {A} and {B}, you get true {C}",
+   "it": "con {A} e {B} # ottieni {C}"
+  },
+  {
+   "en": "I'm glad to give {A} and {B}, # to get {C}",
+   "it": "Sono felice di dare {A} e {B}, # per avere {C}"
+  },
+  {
+   "en": "it takes {A}, {B}, and {C} # to get pure {D}",
+   "it": "ci vogliono {A}, {B} e {C} # per arrivare a {D}"
+  }
+ ]
 }
