@@ -18,12 +18,7 @@
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--mono); overflow: hidden; }
   body { display: grid; grid-template-rows: 1fr; }
   body.idle { cursor: none; }
-  .lang { position: fixed; top: 2.5vh; right: 2.5vw; display: flex; gap: 4px; transition: opacity .6s ease; z-index: 2; }
-  .lang button { font: inherit; font-size: 12px; letter-spacing: .12em; color: var(--ink-3); background: transparent;
-    border: 1px solid #2a2e35; border-radius: 999px; padding: .35em .9em; cursor: pointer; }
-  .lang button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-2); }
-  .lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  body.idle .lang, body.idle .hint { opacity: 0; }
+  body.idle .hint { opacity: 0; }
 
   .screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4vh; padding: 6vh 6vw 2vh; text-align: center; }
   .poem {
@@ -71,10 +66,6 @@
   </section>
 </main>
 <div class="hint" id="hint"></div>
-<nav class="lang" id="lang" aria-label="Language">
-  <button type="button" data-lang="en" lang="en">EN</button>
-  <button type="button" data-lang="it" lang="it">IT</button>
-</nav>
 
 <script>
 const DATA = {
@@ -568,10 +559,8 @@ const IT = {
   }
  ]
 };
-const UI = {
-  en: { hint: "click or F: full screen · ← → · space: pause · G: AI / grammar · L: language", grammar: "artist's grammar" },
-  it: { hint: "clic o F: schermo intero · ← → · spazio: pausa · G: IA / grammatica · L: lingua", grammar: "grammatica dell'artista" },
-};
+const HINT = "click or F: full screen · ← → · space: pause · G: AI / grammar";
+const UI = { en: { grammar: "artist's grammar" }, it: { grammar: "grammatica dell'artista" } };
 const VERSION = "v0.1.0";
 const poems = DATA.poems;
 const params = new URLSearchParams(location.search);
@@ -585,9 +574,10 @@ const toHtml = (text) => text.split(/\s*#\s*/).map((line) =>
 // No trade line under the poem. The grammar version (G key) is marked, since it is not the default.
 const captionFor = (m) => (m === "ai" ? "" : `<span class="tag">${esc(UI[lang].grammar)}</span>`);
 
-let lang = params.get("lang") === "it" ? "it" : params.get("lang") === "en" ? "en" : null;
-try { lang ??= localStorage.getItem("tp-lang"); } catch {}
-if (lang !== "it") lang = "en";
+// Each poem plays in English, then straight away in Italian. ?lang=en or ?lang=it plays one language only.
+const LANGS = ["en", "it"].includes(params.get("lang")) ? [params.get("lang")] : ["en", "it"];
+let phase = 0, lang = LANGS[0];
+const toStart = () => { phase = 0; lang = LANGS[0]; };
 const textOf = (p, m) => (p.live ? p.live[lang] : lang === "it" ? IT.poems[p.tx.vov][m] : p[m]);
 
 // ---- live: the first poem is always the newest real trade on the VOV market ----
@@ -627,6 +617,7 @@ async function refreshLive() {
     const k = poems.findIndex((p) => p.tx.vov === tx.vov && p.tx.date === tx.date);
     poems.unshift(k >= 0 ? poems.splice(k, 1)[0] : livePoem(tx, trades.slice(1)));
     i = 0;
+    toStart();
     show(0, !first);
     schedule();
   } catch {
@@ -638,6 +629,7 @@ let i = 0, mode = params.get("mode") === "grammar" ? "grammar" : "ai", timer = n
 
 function draw(index, m = mode) {
   const p = poems[index];
+  document.documentElement.lang = lang;
   $("poem").innerHTML = toHtml(textOf(p, m));
   $("caption").innerHTML = captionFor(m);
 }
@@ -646,7 +638,12 @@ function show(index, animate = true) {
   $("poem").classList.add("fade"); $("caption").classList.add("fade");
   setTimeout(() => { draw(index); $("poem").classList.remove("fade"); $("caption").classList.remove("fade"); }, 700);
 }
-function schedule() { clearTimeout(timer); if (!paused) timer = setTimeout(() => { i = (i + 1) % poems.length; show(i); schedule(); }, INTERVAL); }
+function next() {
+  if (++phase >= LANGS.length) { phase = 0; i = (i + 1) % poems.length; }
+  lang = LANGS[phase];
+  show(i);
+}
+function schedule() { clearTimeout(timer); if (!paused) timer = setTimeout(() => { next(); schedule(); }, INTERVAL); }
 
 // ---- rendering hooks for the video (render-video.mjs) ----
 window.__render = {
@@ -669,36 +666,21 @@ window.__render = {
   $("end-note").textContent = `Prototype ${VERSION} · ${poems.length} real trades from the Value of Values market · AI poems written within the artist's grammar`;
 })();
 
-function setLang(l, animate = true) {
-  lang = l;
-  try { localStorage.setItem("tp-lang", l); } catch {}
-  document.documentElement.lang = l;
-  $("hint").textContent = UI[l].hint;
-  document.querySelectorAll("#lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
-  if (!params.has("render")) show(i, animate);
-}
-
 if (params.has("render")) {
   document.getElementById("hint").remove();
-  document.getElementById("lang").remove();
 } else {
-  setLang(lang, false);
+  $("hint").textContent = HINT;
   // Controls show while the mouse moves, then fade with the cursor.
   let idleTimer = null;
   const wake = () => { document.body.classList.remove("idle"); clearTimeout(idleTimer); idleTimer = setTimeout(() => document.body.classList.add("idle"), 3000); };
   ["mousemove", "pointerdown", "keydown"].forEach((ev) => addEventListener(ev, wake));
   wake();
-  $("lang").addEventListener("click", (e) => {
-    e.stopPropagation(); // a language click is not a full-screen click
-    const b = e.target.closest("button");
-    if (b && b.dataset.lang !== lang) setLang(b.dataset.lang);
-  });
   show(0, false);
   schedule();
   refreshLive();
   setInterval(refreshLive, 5 * 60 * 1000);
   setTimeout(() => ($("hint").style.opacity = 0), 6000);
-  const step = (d) => { i = (i + d + poems.length) % poems.length; show(i); schedule(); };
+  const step = (d) => { i = (i + d + poems.length) % poems.length; toStart(); show(i); schedule(); };
   const full = () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch?.(() => {});
   addEventListener("click", full);
   addEventListener("keydown", (e) => {
@@ -707,7 +689,6 @@ if (params.has("render")) {
     else if (k === "arrowleft") step(-1);
     else if (k === " ") { e.preventDefault(); paused = !paused; schedule(); }
     else if (k === "g") { mode = mode === "ai" ? "grammar" : "ai"; show(i); }
-    else if (k === "l") setLang(lang === "en" ? "it" : "en");
     else if (k === "f") full();
   });
 }
